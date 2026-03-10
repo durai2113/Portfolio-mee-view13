@@ -1,0 +1,5 @@
+fastapi>=0.95
+uvicorn[standard]>=0.22
+pymongo>=4.0
+python-dotenv>=0.21
+google-generativeai
