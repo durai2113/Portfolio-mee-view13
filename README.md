@@ -29,20 +29,20 @@ A premium, futuristic, and high-performance portfolio website. This project feat
 
 ```text
 .
+├── index.html          # Main Entrance
+├── assets/             # Images & Documents
+├── css/                # Stylesheets (styles.css)
+├── js/                 # JavaScript logic (main.js)
 ├── backend/            # FastAPI Backend Application
-│   ├── services/       # AI (Gemini) Service Logic
-│   ├── config.py       # Configuration & Environment loading
+│   ├── services/       # AI & Email Services
+│   ├── config.py       # Configuration
 │   ├── models.py       # Pydantic Schemas
-│   ├── routes.py       # API Endpoint Definitions
+│   ├── routes.py       # API Endpoints
 │   └── main.py         # App Factory & Static Mounting
 ├── database/           # Database Connection Logic
-├── frontend/           # Static Web Assets
-│   ├── assets/         # CSS, JS, Images, & Docs
-│   └── index.html      # Main Entrance (Single Page App)
-├── requirements.txt    # Python Dependencies
-├── render.yaml         # One-Click Deployment Config
+│   └── database.py     # MongoDB Connection & CRUD
 ├── server.py           # Production Launcher
-└── .env                # Local Environment Variables
+└── render.yaml         # One-Click Deployment Config
 ```
 
 ---

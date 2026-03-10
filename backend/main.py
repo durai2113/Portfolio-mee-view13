@@ -20,21 +20,32 @@ def create_app() -> FastAPI:
     # Prefix our routes with /api
     app.include_router(router, prefix="/api")
 
-    # Serve static assets from the frontend directory
-    if os.path.exists("frontend/assets"):
-        app.mount("/assets", StaticFiles(directory="frontend/assets"), name="assets")
+    # Serve static assets from the root directories
+    if os.path.exists("assets"):
+        app.mount("/assets", StaticFiles(directory="assets"), name="assets")
+    if os.path.exists("css"):
+        app.mount("/css", StaticFiles(directory="css"), name="css")
+    if os.path.exists("js"):
+        app.mount("/js", StaticFiles(directory="js"), name="js")
 
     @app.get("/")
     async def read_index():
-        return FileResponse("frontend/index.html")
+        return FileResponse("index.html")
 
-    # Serve files from frontend root (manifest, etc) and fallback to index.html
+    # Serve files from root and fallback to index.html
     @app.get("/{file_name}")
     async def get_root_file(file_name: str):
-        file_path = os.path.join("frontend", file_name)
+        # Security: only serve specific allowed extensions or files from root
+        allowed_extensions = {".ico", ".png", ".jpg", ".json", ".txt", ".webmanifest"}
+        file_path = file_name
+        
         if os.path.exists(file_path) and os.path.isfile(file_path):
-            return FileResponse(file_path)
-        return FileResponse("frontend/index.html")
+            # Check if extension is allowed and file is not sensitive
+            _, ext = os.path.splitext(file_name)
+            if ext.lower() in allowed_extensions and not file_name.startswith("."):
+                return FileResponse(file_path)
+        
+        return FileResponse("index.html")
 
     return app
 
